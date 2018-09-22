@@ -1,0 +1,71 @@
+﻿<Window x:Class="ConwaysGameOfLife.View.ConwaysGameOfLifeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConwaysGameOfLife.View"
+        mc:Ignorable="d"
+        Title="Conway's Game Of Life" 
+        Background="White"
+        MinHeight="500"
+        MinWidth="500"
+        Height="500" 
+        Width="500">
+    <Window.Resources>
+        <Style x:Key="cellStyle" TargetType="{x:Type Rectangle}">
+            <Style.Setters>
+                <Setter Property="Stroke" Value="Black"></Setter>
+                <Setter Property="StrokeThickness" Value="0.25"></Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CellState}" Value="Alive">
+                    <Setter Property="Fill" Value="Green"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CellState}" Value="Dead">
+                    <Setter Property="Fill" Value="Gray"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="1,1,1,1" Background="LightGreen" Content="START" Command="{Binding StartGameCommand}"></Button>
+            <Button Grid.Column="1" Margin="1,1,1,1" Background="OrangeRed" Content="STOP" Command="{Binding StopGameCommand}"></Button>
+            <Button Grid.Column="2" Margin="1,1,1,1" Background="SkyBlue" Content="STEP" Command="{Binding StepGameCommand}"></Button>
+            <Button Grid.Column="3" Margin="1,1,1,1" Background="Orange" Content="RESET" Command="{Binding ResetGameCommand}"></Button>
+        </Grid>
+        <Label Grid.Row="1" Padding="0,0,0,0" Margin="1,1,1,1">Use left-mouse button to toggle cell state (when game isn't running)</Label>
+        <ItemsControl Grid.Row="2" Margin="1,1,1,1" 
+                      Name="cellGrid" 
+                      ItemsSource="{Binding GameOfLife.GridCells, Mode=OneWay}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding GameOfLife.GridWidthCells, Mode=OneWay}" Rows="{Binding GameOfLife.GridHeightCells, Mode=OneWay}"></UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Style="{StaticResource cellStyle}">
+                        <Rectangle.InputBindings>
+                            <MouseBinding Gesture="LeftClick" 
+                                          Command="{Binding Path=DataContext.ToggleCellStateCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                          CommandParameter="{Binding ElementName=cellGrid}">
+                            </MouseBinding>
+                        </Rectangle.InputBindings>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
