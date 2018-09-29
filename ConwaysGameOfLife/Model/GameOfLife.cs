@@ -315,7 +315,7 @@ namespace ConwaysGameOfLife.Model
             }
             catch (Exception ex)
             {
-                throw new Exception("GameOfLifeStepTimerEventHandler(object sender, EventArgs e): " + ex.ToString());
+                throw new Exception("GameOfLife.StepTimerEventHandler(object sender, EventArgs e): " + ex.ToString());
             }
         }
 
@@ -457,7 +457,7 @@ namespace ConwaysGameOfLife.Model
             }
             catch (Exception ex)
             {
-                throw new Exception("Grid.UpdateGrid(): " + ex.ToString());
+                throw new Exception("GameOfLife.UpdateGrid(): " + ex.ToString());
             }
         }
 
