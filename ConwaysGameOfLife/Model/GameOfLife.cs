@@ -145,13 +145,20 @@ namespace ConwaysGameOfLife.Model
         /// </summary>
         private void BuildGrid()
         {
-            if (!IsGameRunning)
+            try
             {
-                _gridCells = new ObservableCollection<Cell>();
-                while (_gridCells.Count != Constants.GridWidth * Constants.GridHeight)
+                if (!IsGameRunning)
                 {
-                    _gridCells.Add(new Cell(CellState.Dead));
+                    _gridCells = new ObservableCollection<Cell>();
+                    while (_gridCells.Count != Constants.GridWidth * Constants.GridHeight)
+                    {
+                        _gridCells.Add(new Cell(CellState.Dead));
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GameOfLife.BuildGrid(): " + ex.ToString());
             }
         }
 
@@ -161,12 +168,19 @@ namespace ConwaysGameOfLife.Model
         /// </summary>
         private void ResetGrid()
         {
-            if (!IsGameRunning)
+            try
             {
-                foreach (Cell gridCell in _gridCells)
+                if (!IsGameRunning)
                 {
-                    gridCell.CellState = CellState.Dead;
+                    foreach (Cell gridCell in _gridCells)
+                    {
+                        gridCell.CellState = CellState.Dead;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GameOfLife.ResetGrid(): " + ex.ToString());
             }
         }
 
@@ -322,7 +336,7 @@ namespace ConwaysGameOfLife.Model
         /// <summary>
         /// The UpdateGrid method is called to update the grid.
         /// Each cell is updated as per the rules for Conway's game Of Life.
-        /// Fore more information: https://rosettacode.org/wiki/Conway%27s_Game_of_Life
+        /// For more information: https://rosettacode.org/wiki/Conway%27s_Game_of_Life
         /// </summary>
         private async Task UpdateGrid()
         {
