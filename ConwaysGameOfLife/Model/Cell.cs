@@ -73,7 +73,7 @@ namespace ConwaysGameOfLife.Model
             set
             {
                 _cellState = value;
-                RaisePropertyChanged("CellState");
+                RaisePropertyChanged();
             }
         }
 
