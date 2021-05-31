@@ -16,7 +16,7 @@ To update cell **C**, the number of living cells **N** in C's eight-location-nei
 | Alive | 4,5,6,7,8 | Dead (overcrowded) |
 | Alive | 2,3 | Alive (lives) |
 | Dead | 3 | Alive (takes 3 to give birth) |
-| Dead | 0,1,2,3,4,5,6,7,8 | Dead (barren) |
+| Dead | 0,1,2,4,5,6,7,8 | Dead (barren) |
 
 Any cells beyond the square grid are always dead.
 
